@@ -1,0 +1,17 @@
+<% unless current_user.follows.find_by(following_id: @question.user.id).present? %>
+  <%= link_to "follow user", follow_user_path(user_id: @question.user.id, question_id: @question.id), class: "follow_user"%>
+<% else %>
+  <%= link_to "unfollow user", unfollow_user_path(user_id: @question.user.id, question_id: @question.id)%>
+<% end %>
+<% unless follow_topic = current_user.follow_topics.find_by(topic_id: @question.topic.id).present? %>
+  <%= link_to "follow topic", follow_topic_path(topic_id: @question.topic.id, question_id: @question.id), "follow_topic"%>
+<% else %>
+  <%= link_to "unfollow topic", unfollow_topic_path(topic_id: @question.topic.id, question_id: @question.id)%>
+<% end %>
+<h1>Question Test</h1>
+<p><%= @question.name %></p>
+<h2>Answers to above question</h2>
+<% @answers.each do |answer| %>
+  <p class="answer"><%= answer.description %></p><br>
+<% end %>
+ 
