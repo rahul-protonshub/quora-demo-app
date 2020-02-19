@@ -3,15 +3,36 @@
 <% else %>
   <%= link_to "unfollow user", unfollow_user_path(user_id: @question.user.id, question_id: @question.id)%>
 <% end %>
-<% unless follow_topic = current_user.follow_topics.find_by(topic_id: @question.topic.id).present? %>
+<span>: <%= @question&.user&.email  %> </span>
+<br>
+<% unless  current_user.follow_topics.find_by(topic_id: @question.topic.id).present? %>
   <%= link_to "follow topic", follow_topic_path(topic_id: @question.topic.id, question_id: @question.id), class: "follow_topic"%>
 <% else %>
   <%= link_to "unfollow topic", unfollow_topic_path(topic_id: @question.topic.id, question_id: @question.id)%>
 <% end %>
+<span>: <%= @question&.topic&.description %></span>
 <h1>Question Test</h1>
+
 <p><%= @question.name %></p>
+
 <h2>Answers to above question</h2>
 <% @answers.each do |answer| %>
   <p class="answer"><%= answer.description %></p><br>
 <% end %>
+
+<%= form_with scope: :answer, url: answers_path, local: true do |form| %>
+  <p>
+    <%= form.label :answer %><br>
+    <%= form.text_field :description %>
+  </p>
+
+  <%= hidden_field_tag "answer[question_id]", @question.id %>
+
+  <p>
+    <%= form.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Back', questions_path %>
  

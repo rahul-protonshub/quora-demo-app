@@ -10,10 +10,10 @@ class User < ApplicationRecord
   has_many :following_relationship, foreign_key: :user_id, class_name: 'Follow'
   has_many :following, through: :following_relationship, source: :following
 
-  has_many :topics
+ 
   has_many :answers
   has_many :questions
 
   has_many :follow_topics
-  has_many :followed_topics, through: :follow_topics, source: :topic
+  has_many :topics, through: :follow_topics, source: :topic
 end

@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "questions#index"
-  resources :questions, only: [:index, :show]
-
+  resources :questions, :answers
+  
   get 'follow_user', to: 'users#follow_user'
   get	'unfollow_user', to: 'users#unfollow_user'
 	get 'follow_topic', to: 'users#follow_topic'
